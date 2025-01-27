@@ -17,102 +17,9 @@
 
 ## **Mathematical Foundations**
 
-### **1. RSA Algorithm**
-The RSA algorithm is based on the following steps:
-
-1. **Key Generation**:
-   - Select two large prime numbers \( p \) and \( q \).
-   - Compute:
-     \[
-     n = p \cdot q
-     \]
-     \[
-     \phi(n) = (p-1) \cdot (q-1)
-     \]
-   - Choose \( e \), such that \( 1 < e < \phi(n) \) and:
-     \[
-     \gcd(e, \phi(n)) = 1
-     \]
-   - Compute the modular multiplicative inverse of \( e \) modulo \( \phi(n) \):
-     \[
-     d = e^{-1} \mod \phi(n)
-     \]
-
-2. **Public and Private Keys**:
-   - Public Key: \( (e, n) \)
-   - Private Key: \( (d, n) \)
-
-3. **Encryption and Decryption**:
-   - For a message \( M \), where \( 0 \leq M < n \):
-     \[
-     C = M^e \mod n
-     \]
-   - Decryption:
-     \[
-     M = C^d \mod n
-     \]
-
----
-
-### **2. Encapsulation and Decapsulation**
-
-#### **Encapsulation**:
-1. A random symmetric key \( K \) is selected:
-   \[
-   K \in \{1, 2, \dots, n-1\}
-   \]
-2. The symmetric key is encapsulated using the public key \( (e, n) \):
-   \[
-   C = K^e \mod n
-   \]
-
-#### **Decapsulation**:
-1. Using the private key \( (d, n) \), the original symmetric key \( K \) is recovered:
-   \[
-   K = C^d \mod n
-   \]
-
----
-
-### **3. Why It Works**
-
-The regeneration of the same \( K \) is guaranteed due to **Fermat's Little Theorem** and properties of modular arithmetic:
-
-#### **Fermat's Little Theorem**:
-For a prime number \( p \) and any integer \( a \) such that \( a \) is not divisible by \( p \):
-\[
-a^{p-1} \equiv 1 \pmod{p}
-\]
-
-#### **Proof of Correctness**:
-1. Since \( d \) is the modular multiplicative inverse of \( e \):
-   \[
-   e \cdot d \equiv 1 \pmod{\phi(n)}
-   \]
-   This implies:
-   \[
-   e \cdot d = k \cdot \phi(n) + 1 \quad \text{for some integer } k.
-   \]
-
-2. During decapsulation:
-   \[
-   K = (K^e)^d \mod n
-   \]
-   Substituting \( e \cdot d \):
-   \[
-   K = K^{k \cdot \phi(n) + 1} \mod n
-   \]
-
-3. Using modular arithmetic properties:
-   \[
-   K^{\phi(n)} \equiv 1 \pmod{n}
-   \]
-   Hence:
-   \[
-   K^{k \cdot \phi(n)} \cdot K \equiv K \pmod{n}
-   \]
-
-Thus, the original \( K \) is recovered.
+![RSA Algorithm](theory/1.1_latex.png)
+![Encapsulation and Decapsulation](theory/1.2_latex.png)
+![Why it works](theory/1.3_latex.png)
 
 ---
 
@@ -166,8 +73,3 @@ Hashed Original Random Value (K): e79fcb8318a2b7...
 
 Decapsulation successful!
 ```
-
----
-
-### **Note**
-Ensure that the `encap_rsa` module is correctly implemented and imported into your Python environment for seamless execution of the key generation, encapsulation, and decapsulation processes.
